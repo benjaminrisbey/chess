@@ -1,0 +1,82 @@
+from board import board, format_board
+from load_game import load_pieces
+from validate_user_input import validate_input, validate_movement, validate_piece
+from convert_coords import convert_coords
+from piece_move import piece_move
+import os
+
+current_turn = 0
+status_message = ""
+input_message = ""
+load_pieces(board)
+
+
+invalid_user_piece_input = True
+invalid_user_move_input = True
+
+
+def white_turn(current_turn):
+    return current_turn % 2 == 0
+
+
+def render():
+    # os.system("clear")
+    print(
+        format_board(
+            board if white_turn(
+                current_turn) else board[::-1], white_turn(current_turn)
+        )
+    )
+
+    if status_message:
+        print("\033[A", end="")
+        print(status_message)
+
+
+while True:
+    invalid_user_piece_input = True
+    invalid_user_move_input = True
+    status_message = ""
+    input_message = ""
+    select_piece = ""
+    move_piece = ""
+
+    select_x = 9
+    select_y = 9
+    move_x = 9
+    move_y = 9
+
+    # Select piece
+    while invalid_user_piece_input:
+        render()
+
+        select_piece = input("Piece to Move: ")
+        is_valid_basic, message = validate_input(select_piece)
+
+        if is_valid_basic:
+            is_valid_piece, message = validate_piece(
+                select_piece, white_turn(current_turn)
+            )
+            if is_valid_piece:
+                invalid_user_piece_input = False
+
+        status_message = message
+
+    # Select move
+    while invalid_user_move_input:
+        render()
+
+        move_piece = input("Where to Move: ")
+        is_valid_basic, message = validate_input(move_piece)
+
+        if is_valid_basic:
+            is_valid_advanced, message = validate_movement(
+                select_piece, move_piece, current_turn
+            )
+            if is_valid_advanced:
+                invalid_user_move_input = False
+
+        status_message = message
+
+    piece_move(convert_coords(select_piece), convert_coords(move_piece), board)
+    current_turn += 1
