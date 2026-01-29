@@ -1,13 +1,9 @@
 from convert_coords import convert_coords
-from pawn_movement import black_pieces_map, pawn_movement, white_pieces_map
-from white_pieces import white_pieces_map
-from black_pieces import black_pieces_map
+from pawn_movement import pawn_movement
 
-from board import board
 
 valid_x_coordinates = ["a", "b", "c", "d", "e", "f", "g", "h"]
 valid_y_coordinates = ["1", "2", "3", "4", "5", "6", "7", "8"]
-valid_movements = []
 
 
 def validate_input(user_input):
@@ -37,12 +33,36 @@ def validate_movement(start_coords, end_coords, current_turn):
     return False, f"Invalid Movement {start_coords} -> {end_coords}"
 
 
-def validate_piece(selected_piece, current_turn):
-    pieces_map = white_pieces_map if current_turn else black_pieces_map
-    coords = convert_coords(selected_piece)
+def validate_piece(selected_square, current_turn, board):
+    r, c = convert_coords(selected_square)
+    piece = board[r][c]
 
-    for pieces_name, squares_list in pieces_map.items():
-        for square in squares_list:
-            if squares_list[square][-1] == coords:
-                return True, ""
-    return False, "Invalid piece"
+    if piece == "x":
+        return False, "No piece on that square"
+
+    if current_turn and not piece.startswith("\033[34m"):
+        return False, "Not White's piece"
+
+    if not current_turn and not piece.startswith("\033[31m"):
+        return False, "Not Black's piece"
+
+    return True, ""
+
+
+def validate_type(selected_square, board):
+    r, c = convert_coords(selected_square)
+    piece = board[r][c]
+
+    if piece == "\033[34m\033[0m":
+        return True, ""
+    if piece == "":
+        return True, ""
+    if piece == "":
+        return True, ""
+    if piece == "":
+        return True, ""
+    if piece == "":
+        return True, ""
+    if piece == "":
+        return True, ""
+    return False, "invalid piece"

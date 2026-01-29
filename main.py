@@ -1,6 +1,11 @@
 from board import board, format_board
 from load_game import load_pieces
-from validate_user_input import validate_input, validate_movement, validate_piece
+from validate_user_input import (
+    validate_input,
+    validate_movement,
+    validate_piece,
+    validate_type,
+)
 from convert_coords import convert_coords
 from piece_move import piece_move
 import os
@@ -55,10 +60,14 @@ while True:
 
         if is_valid_basic:
             is_valid_piece, message = validate_piece(
-                select_piece, white_turn(current_turn)
+                select_piece, white_turn(current_turn), board
             )
             if is_valid_piece:
-                invalid_user_piece_input = False
+                is_valid_type, message = validate_type(select_piece, board)
+
+                if is_valid_type:
+                    print(message)
+                    invalid_user_piece_input = False
 
         status_message = message
 
