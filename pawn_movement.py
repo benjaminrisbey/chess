@@ -1,26 +1,18 @@
-from white_pieces import white_pieces_map
-from black_pieces import black_pieces_map
 from board import board
+from is_empty import is_empty
 
 
-def is_empty(square, board):
-    row, col = square
-    return board[row][col] == "x"
-
-
-def pawn_movement(start_coords, current_turn):
+def pawn_movement(start_coords, is_white_turn):
     valid_movements = []
 
     row, col = start_coords
 
-    if current_turn == "White":
+    if is_white_turn:
         direction = -1
         start_row = 6
-        enemy = "b"
     else:
         direction = 1
         start_row = 1
-        enemy = "w"
 
     # one square forward
     one_forward = (row + direction, col)
@@ -42,4 +34,3 @@ def pawn_movement(start_coords, current_turn):
         valid_movements.append(right_take)
 
     return valid_movements
-    # capture happens naturally by overwrite

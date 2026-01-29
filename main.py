@@ -80,7 +80,7 @@ while True:
 
         if is_valid_basic:
             is_valid_advanced, message = validate_movement(
-                select_piece, move_piece, current_turn
+                select_piece, move_piece, white_turn(current_turn)
             )
             if is_valid_advanced:
                 invalid_user_move_input = False

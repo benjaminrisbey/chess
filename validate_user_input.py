@@ -22,11 +22,6 @@ def validate_movement(start_coords, end_coords, current_turn):
     start = convert_coords(start_coords)
     end = convert_coords(end_coords)
 
-    if current_turn % 2 == 0:
-        current_turn = "White"
-    else:
-        current_turn = "Black"
-
     if end in pawn_movement(start, current_turn):
         return True, ""
 
@@ -53,16 +48,16 @@ def validate_type(selected_square, board):
     r, c = convert_coords(selected_square)
     piece = board[r][c]
 
-    if piece == "\033[34m\033[0m":
-        return True, ""
-    if piece == "":
-        return True, ""
-    if piece == "":
-        return True, ""
-    if piece == "":
-        return True, ""
-    if piece == "":
-        return True, ""
-    if piece == "":
-        return True, ""
-    return False, "invalid piece"
+    if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
+        return True, "Pawn"
+    if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
+        return True, "Bishop"
+    if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
+        return True, "Knight"
+    if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
+        return True, "Rook"
+    if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
+        return True, "Queen"
+    if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
+        return True, "King"
+    return False, "Invalid piece"
