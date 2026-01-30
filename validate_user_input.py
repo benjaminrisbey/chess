@@ -1,5 +1,7 @@
 from convert_coords import convert_coords
+from get_bishop_moves import get_bishop_moves
 from get_knight_moves import get_knight_moves
+from get_rook_moves import get_rook_moves
 from board import board
 from remove_colour import remove_colour
 
@@ -43,14 +45,17 @@ def validate_type(selected_square, is_white_turn):
     if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
         return True, "Pawn"
     if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
-        return True, "Bishop"
+        for coord in get_bishop_moves((r, c), is_white_turn):
+            piece_possible_moves.append(coord)
 
     if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
         for coord in get_knight_moves((r, c), is_white_turn):
             piece_possible_moves.append(coord)
 
     if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
-        return True, "Rook"
+        for coord in get_rook_moves((r, c), is_white_turn):
+            piece_possible_moves.append(coord)
+
     if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
         return True, "Queen"
     if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":

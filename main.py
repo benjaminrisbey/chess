@@ -20,7 +20,7 @@ def is_white_turn(current_turn):
 
 
 def render():
-    os.system("clear")
+    # os.system("clear")
     print(
         format_board(
             board if is_white_turn(current_turn) else board[::-1],
