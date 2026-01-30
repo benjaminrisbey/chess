@@ -3,6 +3,7 @@ from remove_colour import remove_colour
 
 
 def get_king_moves(coords, is_white_turn):
+    print(board)
     x, y = coords
     possible_moves = []
 
@@ -32,4 +33,5 @@ def get_king_moves(coords, is_white_turn):
                     break
                 else:
                     break
+    print(possible_moves)
     return possible_moves

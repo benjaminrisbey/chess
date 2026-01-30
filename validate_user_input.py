@@ -4,6 +4,7 @@ from get_knight_moves import get_knight_moves
 from get_rook_moves import get_rook_moves
 from get_queen_moves import get_queen_moves
 from get_king_moves import get_king_moves
+from get_pawn_moves import get_pawn_moves
 from board import board
 from remove_colour import remove_colour
 
@@ -41,11 +42,13 @@ def validate_select_input(selected_square, is_white_turn):
 
 
 def validate_type(selected_square, is_white_turn):
+    piece_possible_moves.clear()
     r, c = selected_square
     piece = board[r][c]
 
     if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
-        return True, "Pawn"
+        for coord in get_pawn_moves((r, c), is_white_turn):
+            piece_possible_moves.append(coord)
     if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
         for coord in get_bishop_moves((r, c), is_white_turn):
             piece_possible_moves.append(coord)
@@ -61,9 +64,13 @@ def validate_type(selected_square, is_white_turn):
     if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
         for coord in get_queen_moves((r, c), is_white_turn):
             piece_possible_moves.append(coord)
+
     if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
         for coord in get_king_moves((r, c), is_white_turn):
             piece_possible_moves.append(coord)
+
+    print(piece_possible_moves)
+
     return False, "Invalid piece"
 
 
@@ -82,6 +89,8 @@ def validate_move_input(selected_square, is_white_turn):
         same_colour = "34"
     else:
         same_colour = "31"
+
+    print(piece_possible_moves)
 
     if move_coords in piece_possible_moves:
         for move in piece_possible_moves:
