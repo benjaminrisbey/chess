@@ -2,14 +2,12 @@ from board import board, format_board
 from convert_coords import convert_coords
 
 
-def possible_moves(start_coords):
+def possible_moves(start_coords, type):
     row, col = start_coords
     y_neg_spaces = 7 - row
     y_spaces = 7 - y_neg_spaces
     x_neg_spaces = 7 - col
     x_spaces = 7 - x_neg_spaces
-
-    print(start_coords)
 
     board[row][col] = "\033[34m\033[0m"
 
@@ -63,8 +61,36 @@ def possible_moves(start_coords):
             steps_compare=x_neg_spaces,
         )
 
-    # load_diagonal_axes()
-    load_straight_axes()
+    if type == "rook":
+        load_straight_axes()
+
+    if type == "bishop":
+        load_diagonal_axes()
+
+    if type == "queen":
+        load_diagonal_axes()
+        load_straight_axes()
+
+    # if type == "knight":
+    #     r = row
+    #     c = col
+    #     if board[r + 1][c + 2] == "x":
+    #         board[r + 1][c + 2] = "\033[32mx\033[0m"
+    #     if board[r + 1][c - 2] == "x":
+    #         board[r + 1][c - 2] = "\033[32mx\033[0m"
+    #     if board[r - 1][c - 2] == "x":
+    #         board[r - 1][c - 2] = "\033[32mx\033[0m"
+    #     if board[r - 1][c + 2] == "x":
+    #         board[r - 1][c + 2] = "\033[32mx\033[0m"
+    #     if board[r + 2][c + 1] == "x":
+    #         board[r + 2][c + 1] = "\033[32mx\033[0m"
+    #     if board[r + 2][c - 1] == "x":
+    #         board[r + 2][c - 1] = "\033[32mx\033[0m"
+    #     if board[r - 2][c - 1] == "x":
+    #         board[r - 2][c - 1] = "\033[32mx\033[0m"
+    #     if board[r - 2][c + 1] == "x":
+    #         board[r - 2][c + 1] = "\033[32mx\033[0m"
+
     print(format_board(board, True))
 
 
@@ -85,7 +111,6 @@ def loop_board(steps, row, col, row_dir=None, col_dir=None, steps_compare=0):
         elif col_dir == "neg":
             c = col - i - 1
 
-        print("i ran")
         if board[r][c] == "x":
             board[r][c] = "\033[32mx\033[0m"
         else:
@@ -95,4 +120,4 @@ def loop_board(steps, row, col, row_dir=None, col_dir=None, steps_compare=0):
 start_c = ("e", 4)
 s_c = convert_coords(start_c)
 
-possible_moves(s_c)
+possible_moves(s_c, "knight")
