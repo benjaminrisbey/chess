@@ -23,23 +23,31 @@ def get_pawn_moves(coords, is_white_turn):
     for i in range(1, 2):
         nx, ny = x + dx * i, y + dy * i
         if 0 <= nx < 8 and 0 <= ny < 8:
+            if not board[nx][ny + 1] == "x" and not board[nx][ny + 1].startswith(
+                same_colour
+            ):
+                possible_moves.append((nx, ny + 1))
+                piece = board[nx][ny + 1]
+                clean_piece = remove_colour(piece)
+                board[nx][ny + 1] = f"\033[32m{clean_piece}\033[0m"
+            if not board[nx][ny - 1] == "x" and not board[nx][ny - 1].startswith(
+                same_colour
+            ):
+                possible_moves.append((nx, ny - 1))
+                piece = board[nx][ny - 1]
+                clean_piece = remove_colour(piece)
+                board[nx][ny - 1] = f"\033[32m{clean_piece}\033[0m"
+
             if board[nx][ny] == "x":
                 possible_moves.append((nx, ny))
                 piece = board[nx][ny]
                 clean_piece = remove_colour(piece)
                 board[nx][ny] = f"\033[32m{clean_piece}\033[0m"
                 if x == start_row:
-                    possible_moves.append((nx + dx, ny + dy))
-                    piece = board[nx + dx][ny + dy]
+                    possible_moves.append((nx + dx, ny))
+                    piece = board[nx + dx][ny]
                     clean_piece = remove_colour(piece)
-                    board[nx + dx][ny + dy] = f"\033[32m{clean_piece}\033[0m"
-
-            elif not board[nx][ny].startswith(same_colour):
-                possible_moves.append((nx, ny))
-                piece = board[nx][ny]
-                clean_piece = remove_colour(piece)
-                board[nx][ny] = f"\033[32m{clean_piece}\033[0m"
-                break
+                    board[nx + dx][ny] = f"\033[32m{clean_piece}\033[0m"
             else:
                 break
     return possible_moves
