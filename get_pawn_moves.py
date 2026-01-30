@@ -28,10 +28,15 @@ def get_pawn_moves(coords, is_white_turn):
                 piece = board[nx][ny]
                 clean_piece = remove_colour(piece)
                 board[nx][ny] = f"\033[32m{clean_piece}\033[0m"
+                if x == start_row:
+                    possible_moves.append((nx + dx, ny + dy))
+                    piece = board[nx + dx][ny + dy]
+                    clean_piece = remove_colour(piece)
+                    board[nx + dx][ny + dy] = f"\033[32m{clean_piece}\033[0m"
+
             elif not board[nx][ny].startswith(same_colour):
                 possible_moves.append((nx, ny))
                 piece = board[nx][ny]
-                print(piece)
                 clean_piece = remove_colour(piece)
                 board[nx][ny] = f"\033[32m{clean_piece}\033[0m"
                 break
