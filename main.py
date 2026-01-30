@@ -3,6 +3,7 @@ from board.load_game import load_pieces
 from input.validate_user_input import validate_select_input, validate_move_input
 from moves.piece_move import piece_move
 from convert_coords import convert_coords
+from board.clear_move_highlights import clear_move_highlights
 import os
 
 current_turn = 0
@@ -64,6 +65,10 @@ while True:
         render()
 
         move_square = input("Where to Move: ").lower()
+
+        if move_square == "":
+            clear_move_highlights(is_white_turn(current_turn))
+            break
         is_valid_move_input, message = validate_move_input(
             move_square, is_white_turn(current_turn)
         )
@@ -73,6 +78,7 @@ while True:
 
         status_message = message
 
-    piece_move(convert_coords(select_piece),
-               convert_coords(move_square), board)
-    current_turn += 1
+    if move_square:
+        piece_move(convert_coords(select_piece),
+                   convert_coords(move_square), board)
+        current_turn += 1

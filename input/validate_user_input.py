@@ -7,6 +7,7 @@ from moves.get_king_moves import get_king_moves
 from moves.get_pawn_moves import get_pawn_moves
 from board.board import board
 from remove_colour import remove_colour
+from board.clear_move_highlights import clear_move_highlights
 
 
 valid_x_coordinates = ["a", "b", "c", "d", "e", "f", "g", "h"]
@@ -45,6 +46,8 @@ def validate_type(selected_square, is_white_turn):
     piece_possible_moves.clear()
     r, c = selected_square
     piece = board[r][c]
+    highlighted_piece = remove_colour(piece)
+    board[r][c] = f"\033[33m{highlighted_piece}\033[0m"
 
     if piece == "\033[34m\033[0m" or piece == "\033[31m\033[0m":
         for coord in get_pawn_moves((r, c), is_white_turn):
@@ -69,7 +72,7 @@ def validate_type(selected_square, is_white_turn):
         for coord in get_king_moves((r, c), is_white_turn):
             piece_possible_moves.append(coord)
 
-    print(piece_possible_moves)
+    # print(piece_possible_moves)
 
     return False, "Invalid piece"
 
@@ -83,26 +86,6 @@ def validate_move_input(selected_square, is_white_turn):
     if x not in valid_x_coordinates or y not in valid_y_coordinates:
         return False, f"'{selected_square}' is not a valid board coordinate."
 
-    move_coords = convert_coords(selected_square)
+    clear_move_highlights(is_white_turn)
 
-    if not is_white_turn:
-        same_colour = "34"
-    else:
-        same_colour = "31"
-
-    print(piece_possible_moves)
-
-    if move_coords in piece_possible_moves:
-        for move in piece_possible_moves:
-            x, y = move
-            if board[x][y].startswith("\033[32m"):
-                piece = board[x][y]
-                reset_piece = remove_colour(piece)
-                if reset_piece != "x":
-                    board[x][y] = f"\033[{same_colour}m{reset_piece}\033[0m"
-                else:
-                    board[x][y] = reset_piece
-
-        return True, ""
-
-    return (False, "Invalid Movement")
+    return True, ""
