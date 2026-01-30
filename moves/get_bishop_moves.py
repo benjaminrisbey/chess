@@ -1,9 +1,8 @@
-from board import board
+from board.board import board
 from remove_colour import remove_colour
 
 
-def get_king_moves(coords, is_white_turn):
-    print(board)
+def get_bishop_moves(coords, is_white_turn):
     x, y = coords
     possible_moves = []
 
@@ -12,11 +11,10 @@ def get_king_moves(coords, is_white_turn):
     else:
         same_colour = "\033[31m"
 
-    directions = [(1, 0), (-1, 0), (0, 1), (0, -1),
-                  (1, 1), (1, -1), (-1, 1), (-1, -1)]
+    directions = [(1, 1), (1, -1), (-1, 1), (-1, -1)]
 
     for dx, dy in directions:
-        for i in range(1, 2):
+        for i in range(1, 8):
             nx, ny = x + dx * i, y + dy * i
             if 0 <= nx < 8 and 0 <= ny < 8:
                 if board[nx][ny] == "x":
@@ -33,5 +31,4 @@ def get_king_moves(coords, is_white_turn):
                     break
                 else:
                     break
-    print(possible_moves)
     return possible_moves

@@ -1,11 +1,11 @@
 from convert_coords import convert_coords
-from get_bishop_moves import get_bishop_moves
-from get_knight_moves import get_knight_moves
-from get_rook_moves import get_rook_moves
-from get_queen_moves import get_queen_moves
-from get_king_moves import get_king_moves
-from get_pawn_moves import get_pawn_moves
-from board import board
+from moves.get_bishop_moves import get_bishop_moves
+from moves.get_knight_moves import get_knight_moves
+from moves.get_rook_moves import get_rook_moves
+from moves.get_queen_moves import get_queen_moves
+from moves.get_king_moves import get_king_moves
+from moves.get_pawn_moves import get_pawn_moves
+from board.board import board
 from remove_colour import remove_colour
 
 

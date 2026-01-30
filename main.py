@@ -1,7 +1,7 @@
-from board import board, format_board
-from load_game import load_pieces
-from validate_user_input import validate_select_input, validate_move_input
-from piece_move import piece_move
+from board.board import board, format_board
+from board.load_game import load_pieces
+from input.validate_user_input import validate_select_input, validate_move_input
+from moves.piece_move import piece_move
 from convert_coords import convert_coords
 import os
 
@@ -20,7 +20,7 @@ def is_white_turn(current_turn):
 
 
 def render():
-    # os.system("clear")
+    os.system("clear")
     print(
         format_board(
             board if is_white_turn(current_turn) else board[::-1],

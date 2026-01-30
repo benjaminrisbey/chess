@@ -1,5 +1,5 @@
-from white_pieces import white_pieces_map
-from black_pieces import black_pieces_map
+from pieces.white_pieces import white_pieces_map
+from pieces.black_pieces import black_pieces_map
 
 
 def load_pieces(board):

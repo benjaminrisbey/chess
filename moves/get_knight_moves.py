@@ -1,4 +1,4 @@
-from board import board
+from board.board import board
 from remove_colour import remove_colour
 
 
