@@ -1,12 +1,13 @@
 from board.board import board
 from remove_colour import remove_colour
+from current_turn import is_white_turn
 
 
-def get_knight_moves(coords, is_white_turn):
+def get_knight_moves(coords):
     row, col = coords
     possible_moves = []
 
-    if is_white_turn:
+    if is_white_turn():
         same_colour = "\033[34m"
     else:
         same_colour = "\033[31m"

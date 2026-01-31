@@ -4,6 +4,7 @@ from input.validate_user_input import validate_select_input, validate_move_input
 from moves.piece_move import piece_move
 from convert_coords import convert_coords
 from board.clear_move_highlights import clear_move_highlights
+from current_turn import is_white_turn, update_current_turn
 import os
 
 current_turn = 0
@@ -16,18 +17,9 @@ invalid_user_piece_input = True
 invalid_user_move_input = True
 
 
-def is_white_turn(current_turn):
-    return current_turn % 2 == 0
-
-
 def render():
-    os.system("clear")
-    print(
-        format_board(
-            board if is_white_turn(current_turn) else board[::-1],
-            is_white_turn(current_turn),
-        )
-    )
+    # os.system("clear")
+    print(format_board(board if is_white_turn() else board[::-1]))
 
     if status_message:
         print("\033[A", end="")
@@ -41,6 +33,8 @@ while True:
     select_piece = ""
     move_square = ""
 
+    print(is_white_turn())
+
     select_x = 9
     select_y = 9
     move_x = 9
@@ -51,9 +45,7 @@ while True:
         render()
 
         select_piece = input("Piece to Move: ").lower()
-        is_valid_select_input, message = validate_select_input(
-            select_piece, is_white_turn(current_turn)
-        )
+        is_valid_select_input, message = validate_select_input(select_piece)
 
         if is_valid_select_input:
             invalid_user_piece_input = False
@@ -67,11 +59,9 @@ while True:
         move_square = input("Where to Move: ").lower()
 
         if move_square == "":
-            clear_move_highlights(is_white_turn(current_turn))
+            clear_move_highlights()
             break
-        is_valid_move_input, message = validate_move_input(
-            move_square, is_white_turn(current_turn)
-        )
+        is_valid_move_input, message = validate_move_input(move_square)
 
         if is_valid_move_input:
             invalid_user_move_input = False
@@ -79,6 +69,6 @@ while True:
         status_message = message
 
     if move_square:
-        piece_move(convert_coords(select_piece),
-                   convert_coords(move_square), board)
+        piece_move(convert_coords(select_piece), convert_coords(move_square))
         current_turn += 1
+        update_current_turn(current_turn)

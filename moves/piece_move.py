@@ -1,4 +1,7 @@
-def piece_move(start, end, board):
+from board.board import board
+
+
+def piece_move(start, end):
     sr, sc = start
     er, ec = end
 

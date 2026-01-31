@@ -1,17 +1,18 @@
 from board.board import board
 from remove_colour import remove_colour
+from current_turn import is_white_turn
 
 
-def get_pawn_moves(coords, is_white_turn):
+def get_pawn_moves(coords):
     x, y = coords
     possible_moves = []
 
-    if is_white_turn:
+    if is_white_turn():
         same_colour = "\033[34m"
     else:
         same_colour = "\033[31m"
 
-    if is_white_turn:
+    if is_white_turn():
         directions = (-1, 0)
         start_row = 6
     else:

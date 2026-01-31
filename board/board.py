@@ -1,10 +1,12 @@
+from current_turn import is_white_turn
+
 board = [0] * 8
 
 for i in range(len(board)):
     board[i] = ["x"] * 8
 
 
-def format_board(board, white_turn):
+def format_board(board):
     x_coordinate_labels = "    a b c d e f g h   \n"
     lines = []
     lines.append("\n")
@@ -12,7 +14,7 @@ def format_board(board, white_turn):
     lines.append(x_coordinate_labels)
 
     for i, row in enumerate(board):
-        rank = 8 - i if white_turn else i + 1
+        rank = 8 - i if is_white_turn() else i + 1
 
         line_parts = [f"{rank}   "]
 
@@ -26,7 +28,8 @@ def format_board(board, white_turn):
     lines.append(x_coordinate_labels)
 
     lines.append(
-        f"{'\033[31mBlack\033[0m' if not white_turn else '\033[34mWhite\033[0m'} to move!\n"
+        f"{'\033[31mBlack\033[0m' if not is_white_turn(
+        ) else '\033[34mWhite\033[0m'} to move!\n"
     )
 
     return "\n".join(lines)
